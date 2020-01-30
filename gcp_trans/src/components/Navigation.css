@@ -1,0 +1,7 @@
+.navi_root{
+    flex-grow: 1;
+    background-color: white;
+    display: 'flex';
+    height: 100%;
+    width: fit-content;
+}
