@@ -1,11 +1,16 @@
-import React from 'react';
+import React from "react";
+import {CookiesProvider} from 'react-cookie';
 
-function App() {
-  return (
-    <div className="App">
-      
-    </div>
-  );
+import Main from "./components/Main";
+
+class App extends React.Component {
+    render() {
+        return (
+            <CookiesProvider>
+                <Main />
+            </CookiesProvider>
+        );
+    }
 }
 
 export default App;
