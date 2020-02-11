@@ -7,6 +7,12 @@ const port = 3001;
 const email = 'abc';
 const password = '1234';
 
+const userInfo = {
+    name: "gyungsoo",
+    email: "gsphyo@lguplus.co.kr",
+    phone: "01084001755"
+}
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -20,7 +26,7 @@ app.post('/login', (req, res) => {
     console.log(password);
     if(email === req.body.headers.email){
         if(password === req.body.headers.password){
-            res.status(200).send('success');
+            res.status(200).send(userInfo);
         }
         else{
             res.status(404).send('password');
@@ -29,6 +35,10 @@ app.post('/login', (req, res) => {
     else{
         res.status(404).send('email');
     }
+})
+
+app.post('/register', (req, res) => {
+    console.log('Register');
 })
 
 app.listen(port, () => console.log(`Express Servr Listening on port ${port}`));

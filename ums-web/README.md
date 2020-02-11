@@ -122,3 +122,41 @@
         <Route path="/" exact={true} component={LoginForm} />
     </HashRouter>
     ```
+
+### 2020. 02. 06
+
+#### 할일
+1. 상태 값에 따라서 페이지 라우팅
+2. 로그인 처리
+
+#### 정리
+
+- Props
+    - 부모 컴포넌트가 자식 컴포넌트에게 주는 값
+    - 자식 컴포넌트에서 props을 받아오기만하고, 직접 수정할 순 없음
+    - 
+- State
+    - 동적 데이터를 다룰 때 사용
+    - 값을 변경할 때는 무조건 setState를 이용해야함
+    - 
+- `react-router-dom`의 Route에서 props 넘기기
+    ```js
+    <Route
+        path="/"
+        exact={true}
+        render={props => (
+            <Main
+                name={this.state.email}
+                pwd={this.state.password}
+            />
+        )}
+    />
+    ```
+
+### 2020. 02. 07.
+
+#### 할 일
+- Redux 공부
+- React + Redux 로그인 구현
+    - [https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example](https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example)
+
