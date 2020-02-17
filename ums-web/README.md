@@ -160,3 +160,12 @@
 - React + Redux 로그인 구현
     - [https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example](https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example)
 
+### 2020. 02. 17.
+다시 시작
+
+#### To-Do
+- antd 적용
+- 회원가입 양식 만들기
+    - API 확인
+    - ID 중복확인
+    - ID 양식, PW 양식

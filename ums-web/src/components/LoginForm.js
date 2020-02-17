@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Container, Row, Col, Form, Button, ButtonToolbar } from "react-bootstrap";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import '../style/loginForm.css';
 
 class LoginForm extends Component {

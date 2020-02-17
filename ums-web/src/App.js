@@ -1,32 +1,31 @@
-import React, { Component } from "react";
+import React from "react";
+import { HashRouter, Route } from "react-router-dom";
+import Main from "./routes/Main";
+import Login from "./routes/Login";
+// import LoginControl from "./components/LoginControl";
 
-import Main from "./components/Main";
-import LoginControl from "./components/LoginControl";
+import "./style/App.css";
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLogin: false,
-            userInfo: []
-        };
-    }
-    successLogin = data => {
-        this.setState({ isLogin: true, userInfo: data });
-    };
-    successLogout = () => {
-        this.setState({ isLogin: false, userInfo: [] });
-    };
-    render() {
-        return this.state.isLogin ? (
-            <Main
-                userInfo={this.state.userInfo}
-                onLogoutCheck={this.successLogout}
-            />
-        ) : (
-            <LoginControl onLoginCheck={this.successLogin} />
-        );
-    }
+function App() {
+    return (
+        <HashRouter>
+            <Route path="/" exact={true} component={Main} />
+            <Route path="/login" exact={true} component={Login} />
+            {/* <Route path="/join" exact={true} component={Detail} /> */}
+        </HashRouter>
+    );
+    // return this.state.isLogin ? (
+    //     <Main
+    //         userInfo={this.state.userInfo}
+    //         onLogoutCheck={this.successLogout}
+    //     />
+    // ) : (
+    //     // <LoginControl onLoginCheck={this.successLogin} />
+    //     <Main
+    //         userInfo={this.state.userInfo}
+    //         onLogoutCheck={this.successLogout}
+    //     />
+    // );
 }
 
 export default App;
