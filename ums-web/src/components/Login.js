@@ -5,18 +5,13 @@ import axios from "axios";
 import "../style/Login.css";
 
 class Login extends Component {
-    componentDidMount() {
-        if(this.props.location.state === undefined){
-            this.props.history.push("/");
-        }
-    }
-
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log("Received values of form: ", values);
                 this.LoginCheck(values);
+                this.props.setRenderStatus("main");
             }
         });
     };
@@ -25,6 +20,7 @@ class Login extends Component {
         console.log(
             `Login Check email: ${params.email}, password: ${params.password}`
         );
+
         await axios
             .post("http://localhost:3001/login", {
                 headers: {
@@ -33,23 +29,17 @@ class Login extends Component {
                     password: params.password
                 }
             })
-            .then(resp => {
-                // this.props.onLoginCheck(resp.data);
-                console.log(resp.data);
-                // console.log(this.props.location.state.successLogin);
-                this.props.location.state.successLogin(resp.data);
-                this.props.history.push("/");
-                // this.props.history.push("/");
+            .then(resp => {                
+                console.log(resp.data );
+                this.props.successLogin(resp.data);
             })
             .catch(err => {
                 console.log("err : " + err.response.data);
             });
-        // console.log(data);
     };
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        console.log(this.props);
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <Form.Item>
@@ -104,7 +94,7 @@ class Login extends Component {
                     >
                         Log in
                     </Button>
-                    Or <a href="/">register now!</a>
+                    {/* Or <a href="/">register now!</a> */}
                 </Form.Item>
             </Form>
         );
