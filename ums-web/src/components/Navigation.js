@@ -21,22 +21,22 @@ function Navigation({ isLogin, renderStatus, successLogout, setRenderStatus }) {
         renderHeader = (
             <Col span={6}>
                 {!isLogin ? (
-                    <Button onClick={handleClickLogin}>Login</Button>
+                    <Button onClick={handleClickLogin}>로그인</Button>
                 ) : (
-                    <Button onClick={successLogout}>Logout</Button>
+                    <Button onClick={successLogout}>로그아웃</Button>
                 )}
             </Col>
         );
     } else if (renderStatus === "login") {
         renderHeader = (
             <Col span={6}>
-                <Button onClick={handleClickRegister}>Register</Button>
+                <Button onClick={handleClickRegister}>회원가입</Button>
             </Col>
         );
     } else if (renderStatus === "register") {
         renderHeader = (
             <Col span={6}>
-                <Button onClick={handleClickLogin}>Login</Button>
+                <Button onClick={handleClickLogin}>로그인</Button>
             </Col>
         );
     }
