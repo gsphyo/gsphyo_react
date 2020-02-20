@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Button, Row, Col } from "antd";
-// import { Link } from "react-router-dom";
+
+import '../style/Navigation.css';
 
 const { Header } = Layout;
 
@@ -43,7 +44,7 @@ function Navigation({ isLogin, renderStatus, successLogout, setRenderStatus }) {
 
     return (
         <Layout>
-            <Header>
+            <Header style={{background: "#fff"}}>
                 <Row>
                     <Col span={18}>
                         <h1>UMS</h1>

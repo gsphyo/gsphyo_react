@@ -16,9 +16,9 @@ class App extends Component {
     }
 
     successLogin = data => {
-        console.log(`successLogin : ${data.email}`);
+        // console.log(`successLogin : ${data.email}`);
         this.setState({ isLogin: true, userInfo: data });
-        console.log(`state: ${this.state.userInfo}`);
+        // console.log(`state: ${this.state.userInfo}`);
     };
     
     successLogout = () => {

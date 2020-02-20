@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Icon } from "antd";
+import sha512 from "js-sha512";
+import { Base64 } from "js-base64";
 
 class RegisterForm extends Component {
     constructor(props) {
@@ -22,6 +24,8 @@ class RegisterForm extends Component {
             })
             .then(resp => {
                 // this.props.onLoginCheck(resp.data);
+                console.log(resp);
+                this.props.setRenderStatus("login");
             })
             .catch(err => {
                 console.log("err : " + err.response.data);
@@ -32,8 +36,12 @@ class RegisterForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log("Received values of form: ", values);
-                this.handleRegister(values);
+                const registerInputData = values;
+                registerInputData.password = Base64.encode(
+                    sha512(registerInputData.password)
+                );
+                console.log("Received values of form: ", registerInputData);
+                this.handleRegister(registerInputData);
             }
         });
     };
@@ -59,91 +67,8 @@ class RegisterForm extends Component {
                 force: true
             });
         }
-        this.handlePasswordPattern(value, callback);
+        this.props.handlePasswordPattern(form, value, callback);
         callback();
-    };
-
-    handlePasswordPattern = (value, callback) => {
-        /*
-            - ID가 비밀번호에 포함되는가
-            - 대소문자, 숫자, 특수문자 사용
-            - 동일 문자/숫자 4자리 이상 입력 불가
-            - 연속된 숫자 4자리 이상 불가
-            - 공백 입력 불가 처리 : handleInputPassword
-        */
-        const { form } = this.props;
-        const checkNumberString = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,20}$/.test(
-            value
-        ); //문자, 숫자
-        const checkStringSpe = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{10,20}$/.test(
-            value
-        ); //문자, 특수문자 ^a-zA-Z0-9
-        const checkNumSpe = /^(?=.*[!@#$%^&*])(?=.*[0-9]).{10,20}$/.test(
-            value
-        ); //특수문자, 숫자
-        const checkSamePassword = /(\w)\1\1\1/.test(value); //동일한 문자/숫자 4자리 이상 입력 체크
-        
-        if (value) {
-            if (
-                form.getFieldValue("email") &&
-                (value.includes(form.getFieldValue("email").split("@")[0]) ||
-                    value.includes(
-                        form
-                            .getFieldValue("email")
-                            .split("@")[1]
-                            .split(".")[0]
-                    ))
-            ) {
-                callback("비밀번호에 ID가 포함될 수 없습니다.");
-            } else if (!checkNumberString || !checkStringSpe || !checkNumSpe) {
-                callback(
-                    "문자, 특수문자(!@#$%^&*), 숫자가 포함된 10~20자리의 비밀번호를 입력하세요."
-                );
-            } else if (checkSamePassword) {
-                callback("동일한 문자를 4회이상 반복할 수 없습니다.");
-            } else if (!this.passwordContinue(value, 4)) {
-                callback("abcd와 같이 연속된 문자를 입력할 수 없습니다.");
-            }
-        }
-    };
-
-    // 내일 테스트
-    // function _NoConsecutive(param) {
-    //     var result = false;
-    //     var chars =  /(\d){3,}/;
-    //         var chars2 =  /(\w){3,}/;
-    
-    
-    //     if(param.search(chars) || param.search(chars2)) {
-    //         result =  true;
-    //     }
-    // return result;
-    // }
-
-    passwordContinue = (value, max) => {
-        var o,
-            d,
-            p,
-            n = 0,
-            l = max == null ? 4 : max;
-        for (var i = 0; i < value.length; i++) {
-            var c = value.charCodeAt(i);
-            if (
-                i > 0 &&
-                (p = o - c) > -2 &&
-                p < 2 &&
-                (n = p === d ? n + 1 : 0) > l - 3
-            )
-                return false;
-            d = p;
-            o = c;
-        }
-        return true;
-    };
-
-    handleInputPassword = e => {
-        const inputPasswordSpace = e.target.value.replace(" ", "");
-        e.target.value = inputPasswordSpace;
     };
 
     handlePhoneNumber = e => {
@@ -178,29 +103,29 @@ class RegisterForm extends Component {
 
         const formItemLayout = {
             labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 }
+                xs: { span: 6 },
+                sm: { span: 6 }
             },
             wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 }
+                xs: { span: 18 },
+                sm: { span: 18 }
             }
         };
         const tailFormItemLayout = {
             wrapperCol: {
                 xs: {
-                    span: 24,
-                    offset: 0
+                    span: 18,
+                    offset: 8
                 },
                 sm: {
-                    span: 16,
+                    span: 18,
                     offset: 8
                 }
             }
         };
 
         return (
-            <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+            <Form {...formItemLayout} onSubmit={this.handleSubmit} style={{width: "500px"}}>
                 <Form.Item label="이메일">
                     {getFieldDecorator("email", {
                         rules: [
@@ -213,7 +138,17 @@ class RegisterForm extends Component {
                                 message: "이메일 주소를 입력해주세요."
                             }
                         ]
-                    })(<Input />)}
+                    })(
+                        <Input
+                            prefix={
+                                <Icon
+                                    type="user"
+                                    style={{ color: "rgba(0,0,0,.25)" }}
+                                />
+                            }
+                            placeholder="Email"
+                        />
+                    )}
                 </Form.Item>
                 <Form.Item label="비밀번호" hasFeedback>
                     {getFieldDecorator("password", {
@@ -228,8 +163,15 @@ class RegisterForm extends Component {
                         ]
                     })(
                         <Input.Password
+                            prefix={
+                                <Icon
+                                    type="lock"
+                                    style={{ color: "rgba(0,0,0,.25)" }}
+                                />
+                            }
                             maxLength={20}
-                            onChange={this.handleInputPassword}
+                            onChange={this.props.handleInputPassword}
+                            placeholder="Password"
                         />
                     )}
                 </Form.Item>
@@ -246,13 +188,20 @@ class RegisterForm extends Component {
                         ]
                     })(
                         <Input.Password
+                            prefix={
+                                <Icon
+                                    type="lock"
+                                    style={{ color: "rgba(0,0,0,.25)" }}
+                                />
+                            }
                             maxLength={20}
-                            onBlur={this.handleConfirmBlur}
+                            onBlur={this.props.handleConfirmBlur}
+                            placeholder="Password"
                         />
                     )}
                 </Form.Item>
                 <Form.Item label="휴대폰번호">
-                    {getFieldDecorator("phone", {
+                    {getFieldDecorator("ctn", {
                         rules: [
                             {
                                 required: true,
@@ -261,9 +210,16 @@ class RegisterForm extends Component {
                         ]
                     })(
                         <Input
+                            prefix={
+                                <Icon
+                                    type="phone"
+                                    style={{ color: "rgba(0,0,0,.25)" }}
+                                />
+                            }
                             onChange={this.handlePhoneNumber}
                             maxLength={13}
                             style={{ width: "100%" }}
+                            placeholder="Phone"
                         />
                     )}
                 </Form.Item>
