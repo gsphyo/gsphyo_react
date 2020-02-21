@@ -33,5 +33,12 @@
 
 * Redux
     * React state 컨테이너
-* Container
-    * Redux 스테이트에 접근하는 컴포넌트
+    * reducers는 react의 state를 반환함
+    * 
+    * Container
+        * Redux 스테이트에 접근하는 컴포넌트
+    * Action
+        * container에서 이벤트가 발생하면 action creator를 생성
+        * action creator는 action을 모든 reducer에게 전달
+        * reducer는 action.type에 따라서 state를 변경
+        * state가 변경되면 container 리렌더링
