@@ -42,3 +42,6 @@
         * action creator는 action을 모든 reducer에게 전달
         * reducer는 action.type에 따라서 state를 변경
         * state가 변경되면 container 리렌더링
+* Redux-Promise
+    * action을 핸들링하는 방법
+    * 
