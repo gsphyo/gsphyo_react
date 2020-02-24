@@ -11,9 +11,12 @@ function Navigation({ isLogin, renderStatus, successLogout, setRenderStatus }) {
         setRenderStatus("login");
     }
 
-    function handleClickRegister(e) {
-        e.preventDefault();
-        setRenderStatus("register");
+    // function handleClickRegister(e) {
+    //     e.preventDefault();
+    //     setRenderStatus("register");
+    // }
+    function handleClickMain(e) {
+        setRenderStatus("main");
     }
 
     let renderHeader;
@@ -28,13 +31,15 @@ function Navigation({ isLogin, renderStatus, successLogout, setRenderStatus }) {
                 )}
             </Col>
         );
-    } else if (renderStatus === "login") {
-        renderHeader = (
-            <Col span={6}>
-                <Button onClick={handleClickRegister}>회원가입</Button>
-            </Col>
-        );
-    } else if (renderStatus === "register") {
+    } 
+    // else if (renderStatus === "login") {
+    //     renderHeader = (
+    //         <Col span={6}>
+    //             <Button onClick={handleClickRegister}>회원가입</Button>
+    //         </Col>
+    //     );
+    // } 
+    else if (renderStatus === "register") {
         renderHeader = (
             <Col span={6}>
                 <Button onClick={handleClickLogin}>로그인</Button>
@@ -47,7 +52,7 @@ function Navigation({ isLogin, renderStatus, successLogout, setRenderStatus }) {
             <Header style={{background: "#fff"}}>
                 <Row>
                     <Col span={18}>
-                        <h1>UMS</h1>
+                        <Button type="link" size="large" onClick={handleClickMain}>UMS</Button>
                     </Col>
                     {renderHeader}
                 </Row>
