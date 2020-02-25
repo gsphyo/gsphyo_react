@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Route } from "react-router-dom";
 import Main from "./components/Main";
-// import Login from "./routes/Login";
-// import LoginControl from "./components/LoginControl";
 
 import "./style/App.css";
 
@@ -14,35 +11,52 @@ class App extends Component {
       userID: "",
       userName: "",
       ONEID_KEY: "",
-      userInfo: []
+      SERVICE: [],
+      userInfo: [],
+      callPlanInfo: []
     };
   }
 
-  successLogin = (userID, userName, ONEID_KEY) => {
-    // console.log(`successLogin : ${data.email}`);
-    this.setState({ isLogin: true, userID, userName, ONEID_KEY });
-    // console.log(`state: ${this.state.userInfo}`);
+  successLogin = (userID, userName, ONEID_KEY, SERVICE) => {
+    this.setState({ isLogin: true, userID, userName, ONEID_KEY, SERVICE });
   };
 
   successLogout = () => {
-    this.setState({ isLogin: false, userID: "", userInfo: [] });
+    this.setState({
+      isLogin: false,
+      userID: "",
+      userName: "",
+      ONEID_KEY: "",
+      SERVICE: [],
+      userInfo: [],
+      callPlanInfo: []
+    });
   };
 
   successGetUserInfo = userInfo => {
-      this.setState({userInfo});
-  }
+    this.setState({ userInfo });
+  };
+
+  successGetCallPlan = callPlanInfo => {
+    this.setState({ callPlanInfo });
+  };
 
   render() {
     return (
       <Main
+        className="wrap-app"
         isLogin={this.state.isLogin}
         userID={this.state.userID}
         userName={this.state.userName}
         ONEID_KEY={this.state.ONEID_KEY}
+        SERVICE_CD={this.state.SERVICE.serviceCD}
+        SERVICE_NAME={this.state.SERVICE.serviceName}
         userInfo={this.state.userInfo}
+        callPlanInfo={this.state.callPlanInfo}
         successLogin={this.successLogin}
         successLogout={this.successLogout}
         successGetUserInfo={this.successGetUserInfo}
+        successGetCallPlan={this.successGetCallPlan}
       />
     );
   }
