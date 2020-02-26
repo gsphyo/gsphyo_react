@@ -9,7 +9,7 @@ import {
   API_ID,
   ACCESS_KEY,
   SERVICE_CD,
-  DAS_URL
+  DAS_LOGIN_URL
 } from "../config/common";
 
 const { Option } = Select;
@@ -101,20 +101,20 @@ class Login extends Component {
 
   LoginCheck = async params => {
     const selectParam = JSON.parse(params.select);
-    await axios
-      .post(`${DAS_URL}/member/auth`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          SERVICE_ID: SERVICE_ID,
-          API_ID: API_ID,
-          ACCESS_KEY: ACCESS_KEY,
-          SERVICE_CD: selectParam.serviceCD
-        },
-        body: {
-          USER_ID: params.email,
-          USER_PASSWORD: params.password
-        }
-      })
+    await axios({
+      method: "post",
+      url: DAS_LOGIN_URL,
+      headers: {
+        SERVICE_ID: SERVICE_ID,
+        API_ID: API_ID,
+        ACCESS_KEY: ACCESS_KEY,
+        SERVICE_CD: selectParam.serviceCD
+      },
+      data: {
+        USER_ID: params.email,
+        USER_PASSWORD: params.password
+      }
+    })
       .then(resp => {
         this.props.successLogin(
           params.email,
@@ -136,7 +136,7 @@ class Login extends Component {
       </Option>
     ));
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <Form onSubmit={this.handleSubmit}>
         <Form.Item hasFeedback>
           {getFieldDecorator("select", {
             rules: [{ required: true, message: "서비스를 선택해주세요." }]
@@ -189,7 +189,7 @@ class Login extends Component {
         </Form.Item>
         <Form.Item>
           <Button
-            style={{width: "100%"}}
+            style={{ width: "100%" }}
             size="large"
             type="primary"
             htmlType="submit"

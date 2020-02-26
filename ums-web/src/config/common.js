@@ -1,9 +1,12 @@
 // DAS URL
-export const DAS_URL = "http://localhost:3001/das";
+// export const DAS_URL = "http://localhost:3001";
+export const DAS_URL = "http://34.64.159.102:8080";
+export const DAS_LOGIN_URL = `${DAS_URL}/lguclan/auth/cust/login`;
+export const DAS_USER_URL = `${DAS_URL}/lguclan/auth/cust/search`;
 
 // CAS URL
-// export const CAS_URL = "http://localhost:3001";
-export const CAS_URL = "http://34.64.217.144:5000";
+export const CAS_URL = "http://localhost:3001";
+// export const CAS_URL = "http://34.64.217.144:5000";
 
 // nCAS URL
 
@@ -84,4 +87,9 @@ export const ID_TYPE = {
 export const VTID_YN = {
   Y: "임시ID",
   N: "ONE ID"
+}
+
+// 부가서비스
+export const RESPCODE = {
+  70: "고객 정보를 찾을 수 없습니다."
 }

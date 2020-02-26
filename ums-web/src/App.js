@@ -14,7 +14,7 @@ class App extends Component {
       SERVICE: [],
       userInfo: [],
       callPlanInfo: [],
-      casInfo: []
+      casInfo: ""
     };
   }
 
@@ -30,7 +30,8 @@ class App extends Component {
       ONEID_KEY: "",
       SERVICE: [],
       userInfo: [],
-      callPlanInfo: []
+      callPlanInfo: [],
+      casInfo: ""
     });
   };
 
@@ -57,6 +58,7 @@ class App extends Component {
         SERVICE_NAME={this.state.SERVICE.serviceName}
         userInfo={this.state.userInfo}
         callPlanInfo={this.state.callPlanInfo}
+        casInfo={this.state.casInfo}
         successLogin={this.successLogin}
         successLogout={this.successLogout}
         successGetUserInfo={this.successGetUserInfo}

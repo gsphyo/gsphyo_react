@@ -28,6 +28,7 @@ class Main extends Component {
             SERVICE_NAME={this.props.SERVICE_NAME}
             userInfo={this.props.userInfo}
             callPlanInfo={this.props.callPlanInfo}
+            casInfo={this.props.casInfo}
             successGetUserInfo={this.props.successGetUserInfo}
             successGetCallPlan={this.props.successGetCallPlan}
             successGetCasInfo={this.props.successGetCasInfo}

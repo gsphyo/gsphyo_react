@@ -71,15 +71,15 @@ app.get("/", (req, res) => {
   res.send("Hello");
 });
 
-app.get("/das/member", (req, res) => {
+app.get("/lguclan/auth/cust/search", (req, res) => {
   console.log(req.headers);
   res.status(200).send(userInfo);
 });
 
-app.post("/das/member/auth", (req, res) => {
-  const decodePassword = base64.decode(req.body.body.USER_PASSWORD);
+app.post("/lguclan/auth/cust/login", (req, res) => {
+  const decodePassword = base64.decode(req.body.USER_PASSWORD);
   console.log(req.body);
-  if (email === req.body.body.USER_ID) {
+  if (email === req.body.USER_ID) {
     if (password === decodePassword) {
       res.status(200).send(respLogin);
     } else {
@@ -96,8 +96,9 @@ app.post("/das/svc/vas/callplan", (req, res) => {
 });
 
 app.post("/CASINFO", (req, res) => {
+  console.log(req.headers);
   console.log(req.body);
-  res.status(200)
+  res.status(200).send({RESPCODE: "70"});
 })
 
 app.listen(port, () => console.log(`Express Servr Listening on port ${port}`));
