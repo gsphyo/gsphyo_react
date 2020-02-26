@@ -5,8 +5,6 @@ import Navigation from "./Navigation";
 import Login from "./Login";
 import MainContents from "./MainContents";
 
-import "../style/Main.css";
-
 const { Footer } = Layout;
 const { Title } = Typography;
 
@@ -16,7 +14,7 @@ class Main extends Component {
 
     if (this.props.isLogin) {
       renderContent = (
-        <Layout className="login-layout">
+        <Layout>
           <Navigation
             isLogin={this.props.isLogin}
             successLogout={this.props.successLogout}
@@ -32,15 +30,27 @@ class Main extends Component {
             callPlanInfo={this.props.callPlanInfo}
             successGetUserInfo={this.props.successGetUserInfo}
             successGetCallPlan={this.props.successGetCallPlan}
+            successGetCasInfo={this.props.successGetCasInfo}
           />
-          <Footer className="footer">Cloud Engineering Team</Footer>
+          <Footer style={{textAlign: "center"}}>Cloud Engineering Team</Footer>
         </Layout>
       );
     } else {
       renderContent = (
-        <Row className="login-layout" type="flex" justify="space-around" align="middle">
+        <Row
+          style={{ height: "100vh" }}
+          type="flex"
+          justify="space-around"
+          align="middle"
+        >
           <Col span={6}>
-            <Title className="login-header">
+            <Title
+              style={{
+                textAlign: "center",
+                marginBottom: "1.5em",
+                fontSize: "2vw"
+              }}
+            >
               User Management System
             </Title>
             <Login successLogin={this.props.successLogin} />
@@ -49,7 +59,11 @@ class Main extends Component {
       );
     }
 
-    return <Layout>{renderContent}</Layout>;
+    return (
+      <Layout style={{ minHeight: "100vh", minWidth: "100vw" }}>
+        {renderContent}
+      </Layout>
+    );
   }
 }
 

@@ -27,30 +27,30 @@ const userInfo = {
   RT: "결과코드",
   RT_MSG: "결과메시지",
   USER_INFO: {
-    ONEID_KEY: "회원 일련번호",
-    SERVICE_KEY: "서비스의 고객 Unique ID 값",
-    LGT_TYPE: "자타사구분(0: 타사, 1: 자사)",
-    MBL_MAPPNG_YN: "모바일매핑여부(0:모바일매핑안됨, 1:모바일매핑됨)",
-    USER_TYPE: "회원구분(0:개인, 1:개인사업자, 2:법인사업자, 3:외국인)",
-    USER_ID: "회원아이디",
-    CTN: "CTN",
-    NAME: "이름",
-    BIRTHDAY: "생년월일",
-    GENDER: "성별(0:미지정, 1:남자, 2:여자, 3:기타)",
-    NICKNAME: "별명",
-    ENTR_NO: "가입번호",
-    ACE_NO: "가입계약번호",
-    IS_SMS: "휴대폰 문자 수신여부(0:미수신, 1:수신)",
-    IS_EMAIL: "이메일 수신여부(0:미수신, 1:수신)",
-    IS_STATUS: "회원상태(0:정상, 1:중지)",
-    REG_DATE: "가입일(YYYYMMDD)",
-    CONTC_TELNO: "연락가능전화번호",
-    CABL_TELNO: "유선전화번호",
-    CUST_NO: "고객번호",
-    ID_TYPE: "ID구분",
-    VTID_YN: "임시ID 여부 (Y: 임시ID, N: oneID)",
-    VTID_RQST_RSN_CD: "임시ID 신청 사유코드",
-    FIVEO_ENTR_NO: "Five'O 가입번호"
+    ONEID_KEY: "0000000000001",
+    SERVICE_KEY: "0000000000001",
+    LGT_TYPE: "1",
+    MBL_MAPPNG_YN: "0",
+    USER_TYPE: "0",
+    USER_ID: "gsphyo@lguplus.co.kr",
+    CTN: "01080805468",
+    NAME: "표경수",
+    BIRTHDAY: "19910928",
+    GENDER: "1",
+    NICKNAME: "Gyungsoo",
+    ENTR_NO: "0000000000001",
+    ACE_NO: "0000000000001",
+    IS_SMS: "0",
+    IS_EMAIL: "0",
+    IS_STATUS: "0",
+    REG_DATE: "20200226",
+    CONTC_TELNO: "01084001755",
+    CABL_TELNO: "01084001755",
+    CUST_NO: "0000000000001",
+    ID_TYPE: "T00",
+    VTID_YN: "N",
+    VTID_RQST_RSN_CD: "",
+    FIVEO_ENTR_NO: ""
   }
 };
 
@@ -94,5 +94,10 @@ app.post("/das/svc/vas/callplan", (req, res) => {
   console.log(req.body);
   res.status(200).send(callPlan);
 });
+
+app.post("/CASINFO", (req, res) => {
+  console.log(req.body);
+  res.status(200)
+})
 
 app.listen(port, () => console.log(`Express Servr Listening on port ${port}`));

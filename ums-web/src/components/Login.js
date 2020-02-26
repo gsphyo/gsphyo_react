@@ -11,7 +11,6 @@ import {
   SERVICE_CD,
   DAS_URL
 } from "../config/common";
-import "../style/Login.css";
 
 const { Option } = Select;
 
@@ -102,7 +101,6 @@ class Login extends Component {
 
   LoginCheck = async params => {
     const selectParam = JSON.parse(params.select);
-    console.log(selectParam);
     await axios
       .post(`${DAS_URL}/member/auth`, {
         headers: {
@@ -191,6 +189,7 @@ class Login extends Component {
         </Form.Item>
         <Form.Item>
           <Button
+            style={{width: "100%"}}
             size="large"
             type="primary"
             htmlType="submit"

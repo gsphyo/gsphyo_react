@@ -1,7 +1,5 @@
 import React from "react";
-import { Layout, Button, Row, Col, PageHeader } from "antd";
-
-import "../style/Navigation.css";
+import { Layout, Button, PageHeader } from "antd";
 
 const { Header } = Layout;
 
@@ -9,21 +7,12 @@ function Navigation({ isLogin, successLogout }) {
   let renderHeader;
 
   if (isLogin) {
-    renderHeader = (
-      <Col span={6} push={3}>
-        <Button onClick={successLogout}>로그아웃</Button>
-      </Col>
-    );
+    renderHeader = <Button key="logout" onClick={successLogout}>로그아웃</Button>;
   }
 
   return (
     <Header style={{ background: "#fff" }}>
-      <Row>
-        <Col span={18}>
-          <PageHeader title="UMS" />
-        </Col>
-        {renderHeader}
-      </Row>
+      <PageHeader title="UMS" extra={[ renderHeader ]} />
     </Header>
   );
 }

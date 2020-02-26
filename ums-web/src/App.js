@@ -13,7 +13,8 @@ class App extends Component {
       ONEID_KEY: "",
       SERVICE: [],
       userInfo: [],
-      callPlanInfo: []
+      callPlanInfo: [],
+      casInfo: []
     };
   }
 
@@ -41,10 +42,13 @@ class App extends Component {
     this.setState({ callPlanInfo });
   };
 
+  successGetCasInfo = casInfo => {
+    this.setState({ casInfo });
+  };
+
   render() {
     return (
       <Main
-        className="wrap-app"
         isLogin={this.state.isLogin}
         userID={this.state.userID}
         userName={this.state.userName}
@@ -57,6 +61,7 @@ class App extends Component {
         successLogout={this.successLogout}
         successGetUserInfo={this.successGetUserInfo}
         successGetCallPlan={this.successGetCallPlan}
+        successGetCasInfo={this.successGetCasInfo}
       />
     );
   }
