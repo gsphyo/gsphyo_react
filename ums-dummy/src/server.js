@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const base64 = require("js-base64").Base64;
+const CryptoJS = require("crypto-js");
 const app = express();
 
 const port = 3001;
@@ -9,7 +9,7 @@ const email = "gsphyo@lguplus.co.kr";
 // const password =
 //   "c4420dbe113fc7d3cfc0e1126ac56e226845c6ae70cc71a4d42ad8040beeb9455bacf44b2c3921c6df362107788de80f0c22ad29426578c553e541c604f4bce0";
 const password =
-  "C4420DBE113FC7D3CFC0E1126AC56E226845C6AE70CC71A4D42AD8040BEEB9455BACF44B2C3921C6DF362107788DE80F0C22AD29426578C553E541C604F4BCE0";
+  "xEINvhE/x9PPwOESasVuImhFxq5wzHGk1CrYBAvuuUVbrPRLLDkhxt82IQd4jegPDCKtKUJleMVT5UHGBPS84A==";
 
 const respLogin = {
   RT: "00000",
@@ -59,10 +59,12 @@ const userInfo = {
 const callPlan = {
   RT: "결과코드",
   RT_MSG: "결과 메시지",
-  PLAN_LIST: [{
-    PLAN_CODE: "요금제 코드",
-    PLAN_JOIN_YN: "요금제 가입여부"
-  }]
+  PLAN_LIST: [
+    {
+      PLAN_CODE: "요금제 코드",
+      PLAN_JOIN_YN: "요금제 가입여부"
+    }
+  ]
 };
 
 // const casInfo = {RESPCODE: "70", RESPMSG: "LG U+ 고객정보 없음"};
@@ -82,8 +84,10 @@ app.post("/lguclan/auth/cust/search", (req, res) => {
 });
 
 app.post("/lguclan/auth/cust/login", (req, res) => {
-  const decodePassword = base64.decode(req.body.USER_PASSWORD);
-  console.log(req.body);
+  // const decodePassword = base64.decode(req.body.USER_PASSWORD);
+  // const decodePassword = CryptoJS.enc.Utf8.stringify(req.body.USER_PASSWORD);
+  const decodePassword = req.body.USER_PASSWORD;
+  console.log(req.body.USER_PASSWORD);
   console.log(decodePassword);
   if (email === req.body.USER_ID) {
     if (password === decodePassword) {
@@ -105,16 +109,16 @@ app.post("/CASINFO", (req, res) => {
   // console.log(req.headers);
   // console.log(req.body);
   res.status(200).send(casInfo);
-})
+});
 
 app.put("/reg", (req, res) => {
   console.log(req.body);
-  res.status(200).send({result: "200", msg: "success"});
-})
+  res.status(200).send({ result: "200", msg: "success" });
+});
 
 app.delete("/unreg", (req, res) => {
   console.log(req.body);
-  res.status(200).send({result: "200", msg: "success"});
-})
+  res.status(200).send({ result: "200", msg: "success" });
+});
 
 app.listen(port, () => console.log(`Express Servr Listening on port ${port}`));

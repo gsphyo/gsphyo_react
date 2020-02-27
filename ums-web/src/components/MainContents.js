@@ -40,14 +40,11 @@ class MainContents extends Component {
       }
     })
       .then(resp => {
-        console.log(resp.data);
         this.props.successGetUserInfo(resp.data.USER_INFO);
-        // console.log(resp.data.USER_INFO.CTN);
         const userCTN = resp.data.USER_INFO.CTN;
         const userCTNFront = userCTN.substring(0, 3) + "0";
         const userCTNEnd = userCTN.substring(3, 11);
         const resultCTN = userCTNFront + userCTNEnd;
-        // console.log(resultCTN);
         this.getCASInfo(resultCTN);
       })
       .catch(err => {

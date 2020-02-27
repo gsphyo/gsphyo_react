@@ -66,7 +66,7 @@ class GetCASInfo extends Component {
             <Descriptions.Item label="부가서비스 가입여부">
               <Badge status="error" />
               미가입
-              <Button type="primary" style={{ marginLeft: "3vw" }}>
+              <Button type="primary" style={{ marginLeft: "3vw" }} onClick={this.regCASSvc}>
                 가입하기
               </Button>
             </Descriptions.Item>
@@ -78,7 +78,7 @@ class GetCASInfo extends Component {
             <Descriptions.Item label="부가서비스 가입여부">
               <Badge status="success" />
               가입
-              <Button type="danger" style={{ marginLeft: "3vw" }}>
+              <Button type="danger" style={{ marginLeft: "3vw" }} onClick={this.unRegCASSvc}>
                 해지하기
               </Button>
             </Descriptions.Item>
