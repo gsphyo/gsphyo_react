@@ -6,11 +6,13 @@ const app = express();
 
 const port = 3001;
 const email = "gsphyo@lguplus.co.kr";
+// const password =
+//   "c4420dbe113fc7d3cfc0e1126ac56e226845c6ae70cc71a4d42ad8040beeb9455bacf44b2c3921c6df362107788de80f0c22ad29426578c553e541c604f4bce0";
 const password =
-  "c4420dbe113fc7d3cfc0e1126ac56e226845c6ae70cc71a4d42ad8040beeb9455bacf44b2c3921c6df362107788de80f0c22ad29426578c553e541c604f4bce0";
+  "C4420DBE113FC7D3CFC0E1126AC56E226845C6AE70CC71A4D42AD8040BEEB9455BACF44B2C3921C6DF362107788DE80F0C22AD29426578C553E541C604F4BCE0";
 
 const respLogin = {
-  RT: "200",
+  RT: "00000",
   RT_MSG: "Success",
   ONEID_KEY: "0000000000001",
   USER_NAME: "표경수",
@@ -63,6 +65,9 @@ const callPlan = {
   }]
 };
 
+// const casInfo = {RESPCODE: "70", RESPMSG: "LG U+ 고객정보 없음"};
+const casInfo = { RESPCODE: "00", RESPMSG: "정상", SVC_AUTH: "0|0" };
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -71,14 +76,15 @@ app.get("/", (req, res) => {
   res.send("Hello");
 });
 
-app.get("/lguclan/auth/cust/search", (req, res) => {
-  console.log(req.headers);
+app.post("/lguclan/auth/cust/search", (req, res) => {
+  // console.log(req.headers);
   res.status(200).send(userInfo);
 });
 
 app.post("/lguclan/auth/cust/login", (req, res) => {
   const decodePassword = base64.decode(req.body.USER_PASSWORD);
   console.log(req.body);
+  console.log(decodePassword);
   if (email === req.body.USER_ID) {
     if (password === decodePassword) {
       res.status(200).send(respLogin);
@@ -96,9 +102,19 @@ app.post("/das/svc/vas/callplan", (req, res) => {
 });
 
 app.post("/CASINFO", (req, res) => {
-  console.log(req.headers);
+  // console.log(req.headers);
+  // console.log(req.body);
+  res.status(200).send(casInfo);
+})
+
+app.put("/reg", (req, res) => {
   console.log(req.body);
-  res.status(200).send({RESPCODE: "70"});
+  res.status(200).send({result: "200", msg: "success"});
+})
+
+app.delete("/unreg", (req, res) => {
+  console.log(req.body);
+  res.status(200).send({result: "200", msg: "success"});
 })
 
 app.listen(port, () => console.log(`Express Servr Listening on port ${port}`));

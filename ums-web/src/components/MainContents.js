@@ -11,7 +11,7 @@ import {
   API_ID,
   ACCESS_KEY,
   DAS_USER_URL,
-  CAS_URL
+  CAS_INFO_URL
 } from "../config/common";
 
 const { Content } = Layout;
@@ -41,7 +41,7 @@ class MainContents extends Component {
     })
       .then(resp => {
         console.log(resp.data);
-        // this.props.successGetUserInfo(resp.data.USER_INFO);
+        this.props.successGetUserInfo(resp.data.USER_INFO);
         // console.log(resp.data.USER_INFO.CTN);
         const userCTN = resp.data.USER_INFO.CTN;
         const userCTNFront = userCTN.substring(0, 3) + "0";
@@ -58,13 +58,13 @@ class MainContents extends Component {
   getCASInfo = async ctn => {
     await axios({
       method: "post",
-      url: `${CAS_URL}/CASINFO`,
+      url: CAS_INFO_URL,
       data: {
         CTN: ctn
       }
     })
       .then(resp => {
-        this.props.successGetCasInfo(resp.data.RESPCODE);
+        this.props.successGetCasInfo(resp.data);
         // console.log(resp.data);
       })
       .catch(err => {

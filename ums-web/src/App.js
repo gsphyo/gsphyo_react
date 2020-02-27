@@ -14,7 +14,7 @@ class App extends Component {
       SERVICE: [],
       userInfo: [],
       callPlanInfo: [],
-      casInfo: ""
+      casInfo: []
     };
   }
 
@@ -31,7 +31,7 @@ class App extends Component {
       SERVICE: [],
       userInfo: [],
       callPlanInfo: [],
-      casInfo: ""
+      casInfo: []
     });
   };
 
