@@ -1,17 +1,12 @@
 import React, { Component } from "react";
-import { Form, Input, Icon, Button, Select } from "antd";
+import { Form, Input, Icon, Button, Select, Row, Col, Typography } from "antd";
 import axios from "axios";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 
-import {
-  SERVICE_ID,
-  API_ID,
-  ACCESS_KEY,
-  SERVICE_CD,
-  DAS_LOGIN_URL
-} from "../config/common";
+import { SERVICE_CD, DAS_LOGIN_URL } from "../config/common";
 
 const { Option } = Select;
+const { Title } = Typography;
 
 class Login extends Component {
   handleSubmit = e => {
@@ -19,7 +14,9 @@ class Login extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const loginInputData = values;
-        loginInputData.password = CryptoJS.enc.Base64.stringify(CryptoJS.SHA512(loginInputData.password));
+        loginInputData.password = CryptoJS.enc.Base64.stringify(
+          CryptoJS.SHA512(loginInputData.password)
+        );
         this.LoginCheck(loginInputData);
       }
     });
@@ -103,12 +100,6 @@ class Login extends Component {
     await axios({
       method: "post",
       url: DAS_LOGIN_URL,
-      headers: {
-        SERVICE_ID: SERVICE_ID,
-        API_ID: API_ID,
-        ACCESS_KEY: ACCESS_KEY,
-        SERVICE_CD: selectParam.serviceCD
-      },
       data: {
         USER_ID: params.email,
         USER_PASSWORD: params.password
@@ -122,12 +113,12 @@ class Login extends Component {
             resp.data.ONEID_KEY,
             selectParam
           );
-        } else if (resp.data.RT === "01003") {
-          console.log(resp.data.RT_MSG);
+        } else {
+          alert(resp.data.RT_MSG);
         }
       })
       .catch(err => {
-        console.log("err : " + err.response.data);
+        alert(err);
       });
   };
 
@@ -139,79 +130,101 @@ class Login extends Component {
       </Option>
     ));
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Item hasFeedback>
-          {getFieldDecorator("select", {
-            rules: [{ required: true, message: "서비스를 선택해주세요." }]
-          })(
-            <Select size="large" placeholder="서비스를 선택해주세요.">
-              {serviceCodeOption}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item hasFeedback>
-          {getFieldDecorator("email", {
-            rules: [
-              {
-                type: "email",
-                message: "올바른 이메일주소를 입력해주세요."
-              },
-              {
-                required: true,
-                message: "이메일을 입력해주세요."
-              }
-            ]
-          })(
-            <Input
-              size="large"
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25" }} />}
-              placeholder="Email"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator("password", {
-            rules: [
-              {
-                required: true,
-                message: "비밀번호를 입력하세요."
-              },
-              {
-                validator: this.validatePassword
-              }
-            ]
-          })(
-            <Input.Password
-              size="large"
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              maxLength={20}
-              onChange={this.props.handleInputPassword}
-              placeholder="Password"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button
-            style={{ width: "100%" }}
-            size="large"
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
+      <Row
+        style={{ height: "100vh" }}
+        type="flex"
+        justify="space-around"
+        align="middle"
+      >
+        <Col span={6}>
+          <Title
+            style={{
+              textAlign: "center",
+              marginBottom: "1.5em",
+              fontSize: "2vw"
+            }}
           >
-            로그인
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <a
-            className="login-form-register"
-            href="https://uplus.co.kr/idi/mbrm/entr/ReqWbmbEntr.hpi"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            회원가입하러 가기
-          </a>
-        </Form.Item>
-      </Form>
+            User Management System
+          </Title>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Item hasFeedback>
+              {getFieldDecorator("select", {
+                rules: [{ required: true, message: "서비스를 선택해주세요." }]
+              })(
+                <Select size="large" placeholder="서비스를 선택해주세요.">
+                  {serviceCodeOption}
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item hasFeedback>
+              {getFieldDecorator("email", {
+                rules: [
+                  {
+                    type: "email",
+                    message: "올바른 이메일주소를 입력해주세요."
+                  },
+                  {
+                    required: true,
+                    message: "이메일을 입력해주세요."
+                  }
+                ]
+              })(
+                <Input
+                  size="large"
+                  prefix={
+                    <Icon type="user" style={{ color: "rgba(0,0,0,.25" }} />
+                  }
+                  placeholder="Email"
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator("password", {
+                rules: [
+                  {
+                    required: true,
+                    message: "비밀번호를 입력하세요."
+                  },
+                  {
+                    validator: this.validatePassword
+                  }
+                ]
+              })(
+                <Input.Password
+                  size="large"
+                  prefix={
+                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                  }
+                  maxLength={20}
+                  onChange={this.props.handleInputPassword}
+                  placeholder="Password"
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              <Button
+                style={{ width: "100%" }}
+                size="large"
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+              >
+                로그인
+              </Button>
+            </Form.Item>
+            <Form.Item>
+              <a
+                className="login-form-register"
+                href="https://uplus.co.kr/idi/mbrm/entr/ReqWbmbEntr.hpi"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                회원가입하러 가기
+              </a>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
     );
   }
 }

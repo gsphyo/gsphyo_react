@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { Descriptions, Button, Badge } from "antd";
 
-import {nCAS_REG_URL, nCAS_UNREG_URL} from '../config/common';
+import { nCAS_REG_URL, nCAS_UNREG_URL } from "../config/common";
 
 class GetCASInfo extends Component {
   regCASSvc = () => {
@@ -11,8 +11,8 @@ class GetCASInfo extends Component {
     const userCTNEnd = userCTN.substring(3, 11);
     const resultCTN = userCTNFront + userCTNEnd;
 
-    this.reqnCAS("put", nCAS_REG_URL, resultCTN)
-  }
+    this.reqnCAS("put", nCAS_REG_URL, resultCTN);
+  };
 
   unRegCASSvc = () => {
     const userCTN = this.props.userInfo.CTN;
@@ -20,8 +20,8 @@ class GetCASInfo extends Component {
     const userCTNEnd = userCTN.substring(3, 11);
     const resultCTN = userCTNFront + userCTNEnd;
 
-    this.reqnCAS("delete", nCAS_UNREG_URL, resultCTN)
-  }
+    this.reqnCAS("delete", nCAS_UNREG_URL, resultCTN);
+  };
 
   reqnCAS = async (method, url, ctn) => {
     await axios({
@@ -29,17 +29,12 @@ class GetCASInfo extends Component {
       url: url,
       data: {
         ctn: ctn,
-        pcode: "LRZ0002038",
+        soc: "LRZ0002038",
         svccd: "A01"
       }
     })
       .then(resp => {
         console.log(resp.data);
-        // this.props.successGetUserInfo(resp.data.USER_INFO);
-        // console.log(resp.data.USER_INFO.CTN);
-        
-        // console.log(resultCTN);
-        // this.getCASInfo(resultCTN);
       })
       .catch(err => {
         console.log("err : " + err.response.data);
@@ -49,16 +44,7 @@ class GetCASInfo extends Component {
   render() {
     let casInfoContent;
 
-    if (this.props.casInfo.RESPCODE === "70") {
-      casInfoContent = (
-        <Descriptions title="부가서비스" bordered>
-          <Descriptions.Item label="부가서비스 가입여부">
-            <Badge status="error" />
-            고객 정보 없음
-          </Descriptions.Item>
-        </Descriptions>
-      );
-    } else if (this.props.casInfo.RESPCODE === "00") {
+    if (this.props.casInfo.RESPCODE === "00") {
       const svcAuth = this.props.casInfo.SVC_AUTH.split("|");
       if (svcAuth[0] === "0") {
         casInfoContent = (
@@ -66,25 +52,47 @@ class GetCASInfo extends Component {
             <Descriptions.Item label="부가서비스 가입여부">
               <Badge status="error" />
               미가입
-              <Button type="primary" style={{ marginLeft: "3vw" }} onClick={this.regCASSvc}>
+              <Button
+                type="primary"
+                style={{ marginLeft: "3vw" }}
+                onClick={this.regCASSvc}
+              >
                 가입하기
               </Button>
             </Descriptions.Item>
           </Descriptions>
         );
-      } else {
+      } else{
         casInfoContent = (
           <Descriptions title="부가서비스" bordered>
             <Descriptions.Item label="부가서비스 가입여부">
               <Badge status="success" />
               가입
-              <Button type="danger" style={{ marginLeft: "3vw" }} onClick={this.unRegCASSvc}>
+              <Button
+                type="danger"
+                style={{ marginLeft: "3vw" }}
+                onClick={this.unRegCASSvc}
+              >
                 해지하기
               </Button>
             </Descriptions.Item>
           </Descriptions>
         );
       }
+    } else {
+      // let resultMsg;
+      // if (this.props.casInfo.RESPCODE === "70"){
+      //   resultMsg = CAS_RESP_INFO[this.props.casInfo.RESPCODE];
+      // }
+      casInfoContent = (
+        <Descriptions title="부가서비스" bordered>
+          <Descriptions.Item label="부가서비스 가입여부">
+            <Badge status="error" />
+            {/* {CAS_RESP_INFO[this.props.casInfo.RESPCODE]} */}
+            부가서비스 조회 실패
+          </Descriptions.Item>
+        </Descriptions>
+      );
     }
 
     return <div>{casInfoContent}</div>;

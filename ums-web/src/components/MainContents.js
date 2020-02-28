@@ -2,19 +2,17 @@ import React, { Component } from "react";
 import { Layout, Typography } from "antd";
 import axios from "axios";
 
+import Navigation from "./Navigation";
 import GetUserInfo from "./GetUserInfo";
 // import GetCallPlan from "./GetCallPlan";
 import GetCASInfo from "./GetCASInfo";
 
 import {
-  SERVICE_ID,
-  API_ID,
-  ACCESS_KEY,
   DAS_USER_URL,
   CAS_INFO_URL
 } from "../config/common";
 
-const { Content } = Layout;
+const { Content, Footer } = Layout;
 const { Title } = Typography;
 
 class MainContents extends Component {
@@ -31,24 +29,24 @@ class MainContents extends Component {
       method: "post",
       url: DAS_USER_URL,
       headers: {
-        SERVICE_ID: SERVICE_ID,
-        API_ID: API_ID,
-        ACCESS_KEY: ACCESS_KEY,
-        SERVICE_CD: SERVICE_CD,
         ONEID_KEY: ONEID_KEY,
         USER_ID: userID
       }
     })
       .then(resp => {
-        this.props.successGetUserInfo(resp.data.USER_INFO);
-        const userCTN = resp.data.USER_INFO.CTN;
-        const userCTNFront = userCTN.substring(0, 3) + "0";
-        const userCTNEnd = userCTN.substring(3, 11);
-        const resultCTN = userCTNFront + userCTNEnd;
-        this.getCASInfo(resultCTN);
+        console.log(resp.data);        
+        this.props.successGetUserInfo(resp.data);
+        if(resp.data.RT === "00000"){
+          const userCTNTmp = resp.data.USER_INFO;
+          const userCTNFront = userCTNTmp.CTN.substring(0, 3) + "0";
+          const userCTNEnd = userCTNTmp.CTN.substring(3, 11);
+          const resultCTN = userCTNFront + userCTNEnd;        
+          this.getCASInfo(resultCTN);
+        }
       })
       .catch(err => {
-        console.log("err : " + err.response.data);
+        // console.log("err : " + err);
+        alert(err);
       });
   };
 
@@ -62,36 +60,44 @@ class MainContents extends Component {
     })
       .then(resp => {
         this.props.successGetCasInfo(resp.data);
-        // console.log(resp.data);
       })
       .catch(err => {
-        console.log("err : " + err);
+        // console.log("err : " + err);
+        alert(err);
       });
   };
 
   render() {
     return (
-      <Content
-        style={{
-          margin: "50px 50px 0 50px",
-          padding: "24px",
-          background: "#fff"
-        }}
-      >
-        <Title>{this.props.SERVICE_NAME}</Title>
-        <GetUserInfo userInfo={this.props.userInfo} />
-        {/* <GetCallPlan
+      <Layout>
+        <Navigation
+          isLogin={this.props.isLogin}
+          successLogout={this.props.successLogout}
+        />
+        <Content
+          style={{
+            margin: "50px 50px 0 50px",
+            padding: "24px",
+            background: "#fff"
+          }}
+        >
+          <Title>{this.props.SERVICE_NAME}</Title>
+          <GetUserInfo userInfo={this.props.userInfo} />
+          {/* <GetCallPlan
             isLogin={isLogin}
             SERVICE_CD={SERVICE_CD}
             SUB_NO={userInfo.ENTR_NO}
             callPlanInfo={callPlanInfo}
             successGetCallPlan={successGetCallPlan}
           /> */}
-        <GetCASInfo
-          userInfo={this.props.userInfo}
-          casInfo={this.props.casInfo}
-        />
-      </Content>
+          <GetCASInfo
+            userInfo={this.props.userInfo.USER_INFO}
+            casInfo={this.props.casInfo}
+            getCASInfo={this.getCASInfo}
+          />
+        </Content>
+        <Footer style={{ textAlign: "center" }}>Cloud Engineering Team</Footer>
+      </Layout>
     );
   }
 }

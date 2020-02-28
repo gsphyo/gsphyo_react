@@ -26,8 +26,8 @@ const respLogin = {
 };
 
 const userInfo = {
-  RT: "결과코드",
-  RT_MSG: "결과메시지",
+  RT: "00000",
+  RT_MSG: "성공",
   USER_INFO: {
     ONEID_KEY: "0000000000001",
     SERVICE_KEY: "0000000000001",
@@ -67,7 +67,7 @@ const callPlan = {
   ]
 };
 
-// const casInfo = {RESPCODE: "70", RESPMSG: "LG U+ 고객정보 없음"};
+// const casInfo = {RESPCODE: "09", RESPMSG: "LG U+ 고객정보 없음"};
 const casInfo = { RESPCODE: "00", RESPMSG: "정상", SVC_AUTH: "0|0" };
 
 app.use(cors());
@@ -87,8 +87,8 @@ app.post("/lguclan/auth/cust/login", (req, res) => {
   // const decodePassword = base64.decode(req.body.USER_PASSWORD);
   // const decodePassword = CryptoJS.enc.Utf8.stringify(req.body.USER_PASSWORD);
   const decodePassword = req.body.USER_PASSWORD;
-  console.log(req.body.USER_PASSWORD);
-  console.log(decodePassword);
+  // console.log(req.body.USER_PASSWORD);
+  // console.log(decodePassword);
   if (email === req.body.USER_ID) {
     if (password === decodePassword) {
       res.status(200).send(respLogin);
