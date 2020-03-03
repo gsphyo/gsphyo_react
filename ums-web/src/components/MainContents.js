@@ -45,8 +45,8 @@ class MainContents extends Component {
         }
       })
       .catch(err => {
-        // console.log("err : " + err);
-        alert(err);
+        console.log("err : " + err);
+        // alert(err);
       });
   };
 
@@ -62,8 +62,8 @@ class MainContents extends Component {
         this.props.successGetCasInfo(resp.data);
       })
       .catch(err => {
-        // console.log("err : " + err);
-        alert(err);
+        console.log("err : " + err);
+        // alert(err);
       });
   };
 

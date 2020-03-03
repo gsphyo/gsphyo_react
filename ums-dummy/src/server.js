@@ -13,7 +13,7 @@ const password =
 
 const respLogin = {
   RT: "00000",
-  RT_MSG: "Success",
+  RT_MSG: "성공",
   ONEID_KEY: "0000000000001",
   USER_NAME: "표경수",
   SERVICE_KEY: "0000000000001",

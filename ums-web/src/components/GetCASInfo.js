@@ -1,10 +1,26 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Descriptions, Button, Badge } from "antd";
+import { Descriptions, Button, Badge, Modal } from "antd";
 
 import { nCAS_REG_URL, nCAS_UNREG_URL } from "../config/common";
 
 class GetCASInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false
+    };
+  }
+  showModal = () => {
+    this.setState({
+      visible: true
+    });
+  };
+  cancelModal = () => {
+    this.setState({
+      visible: false
+    });
+  };
   regCASSvc = () => {
     const userCTN = this.props.userInfo.CTN;
     const userCTNFront = userCTN.substring(0, 3) + "0";
@@ -12,6 +28,9 @@ class GetCASInfo extends Component {
     const resultCTN = userCTNFront + userCTNEnd;
 
     this.reqnCAS("put", nCAS_REG_URL, resultCTN);
+    this.setState({
+      visible: false
+    });
   };
 
   unRegCASSvc = () => {
@@ -21,6 +40,9 @@ class GetCASInfo extends Component {
     const resultCTN = userCTNFront + userCTNEnd;
 
     this.reqnCAS("delete", nCAS_UNREG_URL, resultCTN);
+    this.setState({
+      visible: false
+    });
   };
 
   reqnCAS = async (method, url, ctn) => {
@@ -34,10 +56,19 @@ class GetCASInfo extends Component {
       }
     })
       .then(resp => {
-        console.log(resp.data);
+        // console.log(resp.data.result);
+        if (resp.data.result === "200") {
+          this.props.getCASInfo(ctn);
+        } else {
+          if (method === "put") {
+            alert("부가서비스 가입에 실패했습니다.");
+          } else {
+            alert("부가서비스 해지에 실패했습니다.");
+          }
+        }
       })
       .catch(err => {
-        console.log("err : " + err.response.data);
+        console.log("err : " + err);
       });
   };
 
@@ -55,14 +86,22 @@ class GetCASInfo extends Component {
               <Button
                 type="primary"
                 style={{ marginLeft: "3vw" }}
-                onClick={this.regCASSvc}
+                onClick={this.showModal}
               >
                 가입하기
               </Button>
+              <Modal
+                title="부가서비스를 가입하시겠습니까?"
+                visible={this.state.visible}
+                okText="가입"
+                cancelText="취소"
+                onOk={this.regCASSvc}
+                onCancel={this.cancelModal}
+              ></Modal>
             </Descriptions.Item>
           </Descriptions>
         );
-      } else{
+      } else {
         casInfoContent = (
           <Descriptions title="부가서비스" bordered>
             <Descriptions.Item label="부가서비스 가입여부">
@@ -71,10 +110,19 @@ class GetCASInfo extends Component {
               <Button
                 type="danger"
                 style={{ marginLeft: "3vw" }}
-                onClick={this.unRegCASSvc}
+                onClick={this.showModal}
               >
                 해지하기
               </Button>
+              <Modal
+                title="부가서비스를 해지하시겠습니까?"
+                visible={this.state.visible}
+                okText="해지"
+                okType="danger"
+                cancelText="취소"
+                onOk={this.unRegCASSvc}
+                onCancel={this.cancelModal}
+              ></Modal>
             </Descriptions.Item>
           </Descriptions>
         );
