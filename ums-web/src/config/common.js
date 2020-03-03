@@ -9,8 +9,10 @@ export const CAS_INFO_URL = "http://localhost:3001/CASINFO";
 // export const CAS_INFO_URL = "http://34.64.217.144:5000/CASINFO";
 
 // nCAS URL
-export const nCAS_REG_URL = "http://localhost:3001/reg";
-export const nCAS_UNREG_URL = "http://localhost:3001/unreg";
+export const nCAS_REG_URL = "http://35.221.64.17:8080/reg";
+export const nCAS_UNREG_URL = "http://35.221.64.17:8080/unreg";
+// export const nCAS_REG_URL = "http://localhost:3001/reg";
+// export const nCAS_UNREG_URL = "http://localhost:3001/unreg";
 
 // 공통 헤더
 export const SERVICE_ID = "SERVICE_ID";

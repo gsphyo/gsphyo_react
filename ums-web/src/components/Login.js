@@ -136,12 +136,12 @@ class Login extends Component {
         justify="space-around"
         align="middle"
       >
-        <Col span={6}>
+        <Col xxl={6} xl={8} lg={10} md={12} sm={14} xs={16}>
           <Title
             style={{
               textAlign: "center",
               marginBottom: "1.5em",
-              fontSize: "2vw"
+              fontSize: "2em"
             }}
           >
             User Management System

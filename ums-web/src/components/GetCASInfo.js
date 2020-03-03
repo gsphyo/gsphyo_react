@@ -61,8 +61,10 @@ class GetCASInfo extends Component {
           this.props.getCASInfo(ctn);
         } else {
           if (method === "put") {
+            console.log('가입:' + resp.data);
             alert("부가서비스 가입에 실패했습니다.");
           } else {
+            console.log('해지:' + resp.data);
             alert("부가서비스 해지에 실패했습니다.");
           }
         }
